@@ -10,7 +10,7 @@ pipeline {
                 sh '''
                     ls -ltr
                     pwd
-                    cd /ec2
+                    cd ec2
                     ls -l
                 '''
             }
@@ -21,7 +21,7 @@ pipeline {
                 // Initialize Terraform
                 echo 'Initializing Terraform...'
                 sh '''
-                cd /ec2
+                cd ec2
                 terraform init
                 terraform plan
         '''
@@ -33,7 +33,7 @@ pipeline {
                 // Create a Terraform plan
                 echo 'Creating Terraform plan...'
                 sh '''
-                cd /ec2
+                cd ec2
                 
                 terraform plan
         '''
@@ -59,7 +59,7 @@ pipeline {
             steps {
                 // Apply the Terraform plan
                sh '''
-                cd /ec2
+                cd ec2
                 echo 'Applying Terraform plan...with dummy code'
                 terraform apply -auto-approve
             '''
