@@ -1,15 +1,16 @@
 pipeline {
-    agent { node { label 'AGENT-1' } }
+    agent any
 
     stages {
         stage('Checkout') {
             steps {
-               
+                // Checkout the code from your repository
+                git 'https://github.com/Anjina-devops/roboshop-project-configuration.git'
 
                 sh '''
                     ls -ltr
                     pwd
-                   
+                    cd /ec2
                     ls -l
                 '''
             }
@@ -19,7 +20,11 @@ pipeline {
             steps {
                 // Initialize Terraform
                 echo 'Initializing Terraform...'
-                
+                sh '''
+                cd /ec2
+                terraform init
+                terraform plan
+        '''
             }
         }
 
@@ -27,7 +32,11 @@ pipeline {
             steps {
                 // Create a Terraform plan
                 echo 'Creating Terraform plan...'
+                sh '''
+                cd /ec2
                 
+                terraform plan
+        '''
             }
         }
 
@@ -49,7 +58,11 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 // Apply the Terraform plan
+               sh '''
+                cd /ec2
                 echo 'Applying Terraform plan...with dummy code'
+                terraform apply -auto-approve
+            '''
             }
         }
     }
