@@ -1,5 +1,5 @@
 pipeline {
-    agent {node { label 'AGENT-1' } }
+    agent { label 'AGENT-1' }
 
     stages {
         stage('Checkout') {
@@ -23,18 +23,17 @@ pipeline {
                 sh '''
                 cd ec2
                 terraform init
-                
-        '''
+                '''
             }
         }
 
         stage('Terraform Plan') {
             steps {
-			dir('ec2') {
+                dir('ec2') {
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-auth']]) {
                         sh 'terraform plan'
                     }
-                
+                }
             }
         }
 
@@ -55,10 +54,12 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-			dir('ec2') {
+                dir('ec2') {
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-auth']]) {
                         sh 'terraform apply -auto-approve'
                     }
+                }
+            }
         }
     }
 
