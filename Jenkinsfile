@@ -30,13 +30,11 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                // Create a Terraform plan
-                echo 'Creating Terraform plan...'
-                sh '''
-                cd ec2
+			dir('ec2') {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-auth']]) {
+                        sh 'terraform plan'
+                    }
                 
-                terraform plan
-        '''
             }
         }
 
@@ -57,13 +55,10 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                // Apply the Terraform plan
-               sh '''
-                cd ec2
-                echo 'Applying Terraform plan...with dummy code'
-                terraform apply -auto-approve
-            '''
-            }
+			dir('ec2') {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-auth']]) {
+                        sh 'terraform apply -auto-approve'
+                    }
         }
     }
 
