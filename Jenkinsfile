@@ -18,7 +18,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                // Initialize Terraform
+                // Initialize Terraform yhrough jenkins pipeline
                 echo 'Initializing Terraform...'
                 sh '''
                 cd ec2
