@@ -4,13 +4,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from your repository
-                git 'https://github.com/Anjina-devops/roboshop-project-configuration.git'
+               
 
                 sh '''
                     ls -ltr
                     pwd
-                    cd /terraform/ec2
+                   
                     ls -l
                 '''
             }
@@ -20,7 +19,7 @@ pipeline {
             steps {
                 // Initialize Terraform
                 echo 'Initializing Terraform...'
-                sh 'terraform init'
+                
             }
         }
 
@@ -28,7 +27,7 @@ pipeline {
             steps {
                 // Create a Terraform plan
                 echo 'Creating Terraform plan...'
-                sh 'terraform plan -out=tfplan'
+                
             }
         }
 
@@ -50,7 +49,7 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 // Apply the Terraform plan
-                sh 'terraform apply -auto-approve tfplan'
+                echo 'Applying Terraform plan...'
             }
         }
     }
