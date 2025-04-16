@@ -61,6 +61,31 @@ pipeline {
                 }
             }
         }
+
+        stage('Approval') {
+            steps {
+                // Wait for manual approval before applying changes
+                script {
+                    def userInput = input(
+                        id: 'userInput', // Unique id for the input step
+                        message: 'Do you want to Destroy the Terraform plan?',
+                        parameters: [
+                            [$class: 'BooleanParameterDefinition', name: 'Approve', defaultValue: true]
+                        ]
+                    )
+                }
+            }
+        }
+
+        stage('Terraform Destroy') {
+            steps {
+                dir('ec2') {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-auth']]) {
+                        sh 'terraform destroy -auto-approve'
+                    }
+                }
+            }
+        }
     }
 
     post {
