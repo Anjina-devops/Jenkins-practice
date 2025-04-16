@@ -9,7 +9,8 @@ pipeline {
 
                 sh '''
                     ls -ltr
-                    cd /home/roboshop/roboshop-project-configuration/terraform/ec2
+                    pwd
+                    cd /terraform/ec2
                     ls -l
                 '''
             }
