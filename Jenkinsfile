@@ -6,6 +6,12 @@ pipeline {
             steps {
                 // Checkout the code from your repository
                 git 'https://github.com/Anjina-devops/roboshop-project-configuration.git'
+
+                sh '''
+                    ls -ltr
+                    cd /home/roboshop/roboshop-project-configuration/terraform/ec2
+                    ls -l
+                '''
             }
         }
 
