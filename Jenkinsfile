@@ -49,7 +49,7 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 // Apply the Terraform plan
-                echo 'Applying Terraform plan...'
+                echo 'Applying Terraform plan...with dummy code'
             }
         }
     }
