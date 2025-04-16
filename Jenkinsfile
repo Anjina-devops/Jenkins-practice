@@ -62,7 +62,7 @@ pipeline {
             }
         }
 
-        stage('Approval') {
+        stage('Destroy?') {
             steps {
                 // Wait for manual approval before applying changes
                 script {
